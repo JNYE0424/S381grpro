@@ -1,0 +1,16 @@
+{
+    "name": "Server-Side Application",
+    "description": "Express Static App",
+    "author": "",
+    "version": "0.0.1",
+    "dependencies": {
+        "bcrypt": "^5.1.1",
+        "express": "*",
+        "express-session": "^1.18.1",
+        "mongodb": "^6.10.0"
+    },
+    "engine": "node >= 10.0.0",
+    "scripts": {
+        "start": "node server"
+    }
+}

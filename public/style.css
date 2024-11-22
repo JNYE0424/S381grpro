@@ -1,0 +1,56 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #CACACA;
+}
+
+#itemList {
+            max-height: 500px;  /* Set a maximum height for the item list */
+            overflow-y: auto;   /* Enable vertical scrolling */
+            border: 1px solid #ccc; /* Optional: add a border */
+            padding: 10px;      /* Optional: add some padding */
+        }
+        
+#searchBar {
+            margin-bottom: 10px; /* Space below the search bar */
+            padding: 5px;        /* Padding for the input */
+            width: 100%;         /* Full width */
+            box-sizing: border-box; /* Include padding in width */
+        }
+
+.panel{
+    width: 90%;
+    height: 450px;
+    background-color: white;
+    border: 2px solid black;
+    margin: 5px auto;
+    
+}
+
+.itemBox{
+    width: 97%;
+    height: 40px;
+    background-color: blue;
+    border: 2px solid black;
+    margin: 10px auto;
+}
+
+.text-line{
+    background-color: transparent;
+    width: 15%;
+    color: #000000;
+    outline: none;
+    outline-style: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: solid #eeeeee 1px;
+    text-decoration: none;
+    padding: 3px 5px;
+}
+
+.hidden {
+    display: none;
+}
+
+
