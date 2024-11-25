@@ -34,9 +34,14 @@ async function main() {
 
 
 async function connectToDatabase() {
+    try {
         await client.connect();
         console.log('Connected to MongoDB');
+    } catch (error) {
+        console.error('MongoDB connection error:', error);
+    }
 }
+
 
 connectToDatabase();
 
@@ -61,37 +66,66 @@ app.get('/register', (req, res) => {
 
 app.post('/register', async (req, res) => {
     const { userName, userPassword } = req.body;
-    const hashedPassword = await bcrypt.hash(userPassword, 10);
-    const newUser = new User({ userName, userPassword: hashedPassword });
-    let user = await newUser.save();
-    console.log("Added user: " + user);
-    res.redirect('/login');
-});
 
+    console.log('Received data:', req.body);
+    console.log('UserName:', userName);
+    console.log('UserPassword:', userPassword);
+
+    // Validate input
+    if (!userName || !userPassword) {
+        return res.status(400).send('Username and password are required.');
+    }
+
+    try {
+        // Check for existing user
+        const existingUser = await User.findOne({ userName }); // Ensure this matches the schema
+        console.log('Existing user:', existingUser);
+        if (existingUser) {
+            return res.status(400).send('Username already exists.');
+        }
+
+        // Hash the password
+        const hashedPassword = await bcrypt.hash(userPassword, 10);
+        const newUser = new User({ userName, userPassword: hashedPassword });
+
+        // Save the new user
+        await newUser.save();
+        console.log('Added user:', newUser);
+        res.redirect('/login');
+    } catch (error) {
+        console.error('Error adding user:', error);
+        if (error.code === 11000) {
+            return res.status(400).send('Username already exists.');
+        }
+        res.status(500).send('Internal Server Error');
+    }
+});
 app.get('/login', (req, res) => {
     res.render('login');
 });
 
 app.post('/login', async (req, res) => {
     const { userName, userPassword } = req.body;
-    const user = await User.findOne({ userName });
 
-    if (!user) {
-        console.log('User not found:', userName);
-        return res.status(401).send('Invalid username or password');
-    }
+    try {
+        const user = await User.findOne({ userName });
+        if (!user) {
+            return res.status(401).send('Invalid username or password');
+        }
 
-    const isMatch = await bcrypt.compare(userPassword, user.userPassword);
-    if (isMatch) {
-        req.session.userId = user._id; 
-        console.log(`User ${userName} has logged in`);
-        res.redirect('/database');
-    } else {
-        console.log('Password does not match for user:', userName);
-        res.status(401).send('Invalid username or password');
+        const isMatch = await bcrypt.compare(userPassword, user.userPassword);
+        if (isMatch) {
+            req.session.userId = user._id;
+            console.log(`User ${userName} has logged in`);
+            return res.redirect('/database');
+        } else {
+            return res.status(401).send('Invalid username or password');
+        }
+    } catch (error) {
+        console.error('Error during login:', error);
+        return res.status(500).send('Internal Server Error');
     }
 });
-
 app.get('/logout', (req, res) => {
     req.session.destroy(err => {
         if (err) {
