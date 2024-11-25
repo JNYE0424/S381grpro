@@ -5,11 +5,15 @@
     <link rel="stylesheet" type="text/css" href="style.css">
     <title>Anime Database</title>
 </head>
-<body>
+<body >
+<div class="header">
   <input type="text" id="searchBar" placeholder="Search for anime..." oninput="filterItems()">
-        <div class="panel" id="itemList" >
-        <% for (var i = 0; i < data.length; i++) { %>
-    <div class="itemBox" 
+  
+  <form method="POST" action="/logout"><button class="logoutBtn" onclick="logout()">Logout</button></form></div>
+        <div class="panel" id="itemList">
+        
+    <% for (var i = 0; i < data.length; i++) { %>
+    <div class="itemBox"  
          data-anime-name="<%= typeof data[i].animeName === 'string' ? data[i].animeName.toLowerCase() : '' %>"
          data-language="<%= typeof data[i].language === 'string' ? data[i].language.toLowerCase() : '' %>"
          data-original-run="<%= typeof data[i].originalRun === 'string' ? data[i].originalRun.toLowerCase() : '' %>"
@@ -18,60 +22,78 @@
          data-director="<%= typeof data[i].director === 'string' ? data[i].director.toLowerCase() : '' %>"
          data-genre="<%= typeof data[i].genre === 'string' ? data[i].genre.toLowerCase() : '' %>"
          data-cartoonist="<%= typeof data[i].cartoonist === 'string' ? data[i].cartoonist.toLowerCase() : '' %>">
-        <strong>Anime Name:</strong> <%= data[i].animeName %>
-        <strong>Language:</strong> <%= data[i].language %>
-        <strong>Original Run:</strong> <%= data[i].originalRun %>
-        <strong>Episodes:</strong> <%= data[i].episodes %>
-        <strong>Studio:</strong> <%= data[i].studio %>
-        <strong>Director:</strong> <%= data[i].director %>
-        <strong>Genre:</strong> <%= data[i].genre %>
-        <strong>Cartoonist:</strong> <%= data[i].cartoonist %>
-        <button onclick="showEditDetails('<%= data[i]._id %>','<%= data[i].animeName %>', '<%= data[i].language %>', '<%= data[i].originalRun %>', '<%= data[i].episodes %>', '<%= data[i].studio %>', '<%= data[i].director %>', '<%= data[i].genre %>', '<%= data[i].cartoonist %>')">Show / Edit</button>
+         
+         <button onclick="showEditDetails('<%= data[i]._id %>','<%= data[i].animeName %>', 
+             '<%= data[i].language %>', '<%= data[i].originalRun %>', 
+             '<%= data[i].episodes %>', '<%= data[i].studio %>', 
+             '<%= data[i].director %>', '<%= data[i].genre %>', 
+             '<%= data[i].cartoonist %>')" class="itemBtn">
+             <div class="row">
+            <div class="itemcolumn"><strong class="itemText">Anime Name: <%= data[i].animeName %></strong></div>
+            <div class="itemcolumn"><strong class="itemText">Language: <%= data[i].language %></strong></div>
+            <div class="itemcolumn"><strong class="itemText">Original Run: <%= data[i].originalRun %></strong></div>
+            <div class="itemcolumn"><strong class="itemText">Studio: <%= data[i].studio %></strong></div>
+		</div>
+
+
+        </button>
         <form method="POST" action="/database/delete">
             <input type="hidden" name="animeName" value="<%= data[i].animeName %>">
-            <button type="submit" onclick="return confirm('Are you sure you want to delete <%= data[i].animeName %>?');">Delete</button>
+            <button type="submit" onclick="return confirm('Are you sure you want to delete <%= data[i].animeName %>?');" class="deleteBtn">Delete</button>
         </form>
     </div>
-<% } %>
-    </div>
+    <% } %>
+</div>
+    <br><br>
 
-    <button id="createButton" onclick="showCreatePanel()">Create</button>
+    <button class="createBtn" onclick="showCreatePanel()">Create</button>
     
-    <div class="panel hidden" id="editPanel">
-        <h3>Edit Anime</h3>
+        <div class="panel hidden" id="editPanel">
+        <h1>Edit Anime</h1><br>
         <form id="editForm" method="POST" action="/database/update">
             <input type="hidden" id="editId" name="id">
-            <strong>Anime Name:</strong> <input type="text" id="editName" name="animeName" class="text-line" ><br>
-            <strong>Language:</strong> <input type="text" id="editLanguage" name="language" class="text-line" ><br>
-            <strong>Original Run:</strong> <input type="text" id="editOriginalRun" name="originalRun" class="text-line" ><br>
-            <strong>Episodes:</strong> <input type="number" id="editEpisodes" name="episodes" class="text-line" ><br>
-            <strong>Studio:</strong> <input type="text" id="editStudio" name="studio" class="text-line" ><br>
-            <strong>Director:</strong> <input type="text" id="editDirector" name="director" class="text-line" ><br>
-            <strong>Genre:</strong> <input type="text" id="editGenre" name="genre" class="text-line" ><br>
-            <strong>Cartoonist:</strong> <input type="text" id="editCartoonist" name="cartoonist" class="text-line" ><br>
-            <button type="submit">Save</button>
+            <div class="row">
+            <div class="column">
+            <strong>Anime Name:</strong> <input type="text" id="editName" name="animeName" class="text-line" ><br><br>
+            <strong>Language:</strong> <input type="text" id="editLanguage" name="language" class="text-line" ><br><br>
+            <strong>Original Run:</strong> <input type="text" id="editOriginalRun" name="originalRun" class="text-line"><br><br>
+            <strong>Episodes:</strong> <input type="number" id="editEpisodes" name="episodes" class="text-line" >
+            
+            </div>
+            <div class="column">
+            <strong>Studio:</strong> <input type="text" id="editStudio" name="studio" class="text-line" ><br><br>
+            <strong>Director:</strong> <input type="text" id="editDirector" name="director" class="text-line" ><br><br>
+            <strong>Genre:</strong> <input type="text" id="editGenre" name="genre" class="text-line" ><br><br>
+            <strong>Cartoonist:</strong> <input type="text" id="editCartoonist" name="cartoonist" class="text-line" >
+            </div>
+            </div>
+            <button type="submit" class="saveBtn">Save</button>
             </form>
-        <button onclick="cancelEdit()">Cancel</button>
+        <button onclick="cancelEdit()" class="cencelBtn">Cancel</button>
     </div>
     
     <div class="panel hidden" id="createPanel">
-    <h3>Create New Anime</h3>
+    <h1>Create New Anime</h1><br>
     <form method="POST" action="/database/add">
-        <strong>Anime Name:</strong> <input type="text" id="createName" name="createName" class="text-line" ><br>
-        <strong>Language:</strong> <input type="text" id="createLanguage" name="createLanguage" class="text-line" ><br>
-        <strong>Original Run:</strong> <input type="text" id="createOriginalRun" name="createOriginalRun" class="text-line" ><br>
-        <strong>Episodes:</strong> <input type="number" id="createEpisodes" name="createEpisodes" class="text-line" ><br>
-        <strong>Studio:</strong> <input type="text" id="createStudio" name="createStudio" class="text-line" ><br>
-        <strong>Director:</strong> <input type="text" id="createDirector" name="createDirector" class="text-line" ><br>
-        <strong>Genre:</strong> <input type="text" id="createGenre" name="createGenre" class="text-line" ><br>
-        <strong>Cartoonist:</strong> <input type="text" id="createCartoonist" name="createCartoonist" class="text-line" ><br>
-        <button type="submit">Save</button>
+        <div class="row">
+        <div class="column">
+        <strong>Anime Name:</strong> <input type="text" id="createName" name="createName" class="text-line" ><br><br>
+        <strong>Language:</strong> <input type="text" id="createLanguage" name="createLanguage" class="text-line" ><br><br>
+        <strong>Original Run:</strong> <input type="text" id="createOriginalRun" name="createOriginalRun" class="text-line" ><br><br>
+        <strong>Episodes:</strong> <input type="number" id="createEpisodes" name="createEpisodes" class="text-line" >
+        </div>
+        <div class="column">
+        <strong>Studio:</strong> <input type="text" id="createStudio" name="createStudio" class="text-line" ><br><br>
+        <strong>Director:</strong> <input type="text" id="createDirector" name="createDirector" class="text-line" ><br><br>
+        <strong>Genre:</strong> <input type="text" id="createGenre" name="createGenre" class="text-line" ><br><br>
+        <strong>Cartoonist:</strong> <input type="text" id="createCartoonist" name="createCartoonist" class="text-line" >
+        </div>
+        </div>  
+        <button type="submit" class="saveBtn">Save</button>
     </form>
-    <button onclick="cancelCreate()">Cancel</button>
+    <button onclick="cancelCreate()" class="cencelBtn">Cancel</button>
 </div>
-    
-    
-    <script>
+ <script>
         function showEditDetails(id,name, language, originalRun,episodes,studio,director,genre,cartoonist) {
             document.getElementById('editPanel').classList.remove('hidden');
             document.getElementById('createPanel').classList.add('hidden');
@@ -88,7 +110,6 @@
 
         function deleteItem(name) {
             if (confirm(`Are you sure you want to delete ${name}?`)) {
-                // Perform deletion (you would need backend code for this)
                 alert(`${name} has been deleted.`);
             }
         }
@@ -136,7 +157,6 @@
         const genre = items[i].getAttribute('data-genre');
         const cartoonist = items[i].getAttribute('data-cartoonist');
 
-        // Check if the search term is included in any of the fields
         if (animeName.includes(filter) ||
             language.includes(filter) ||
             originalRun.includes(filter) ||
@@ -145,12 +165,16 @@
             director.includes(filter) ||
             genre.includes(filter) ||
             cartoonist.includes(filter)) {
-            items[i].style.display = ''; // Show item
+            items[i].style.display = '';
         } else {
-            items[i].style.display = 'none'; // Hide item
+            items[i].style.display = 'none';
         }
     }
 }
+
+function logout() {
+            alert('You have been logged out.');
+        }
     </script>
 </body>
 </html>

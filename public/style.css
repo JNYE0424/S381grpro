@@ -1,43 +1,80 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #CACACA;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    
+}
+.column{
+  align-items: left;
+  float: left;
+  width: 50%;
+  padding: 0%;
+}
+
+.itemcolumn{
+  align-items: left;
+  float: left;
+  width: 20%;
+  padding: 0%;
+}
+
+
+.row:after{
+  content:"";
+  display:table;
+  clear:both;
+}
+
+.itemText{
+  font-size: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    max-width: 600px;
+    margin-bottom: 10px;
 }
 
 #itemList {
-            max-height: 500px;  /* Set a maximum height for the item list */
-            overflow-y: auto;   /* Enable vertical scrolling */
-            border: 1px solid #ccc; /* Optional: add a border */
-            padding: 10px;      /* Optional: add some padding */
+        max-height: 500px;  
+        overflow-y: auto;   
+        border: 1px solid #ccc;
         }
         
 #searchBar {
-            margin-bottom: 10px; /* Space below the search bar */
-            padding: 5px;        /* Padding for the input */
-            width: 100%;         /* Full width */
-            box-sizing: border-box; /* Include padding in width */
-        }
+    margin-bottom: 10px; 
+    padding: 10px;        
+    width: 100%;         
+    max-width: 600px; 
+    box-sizing: border-box;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.1);
+    margin-top: 5px;
+}
 
 .panel{
     width: 90%;
     height: 450px;
     background-color: white;
-    border: 2px solid black;
-    margin: 5px auto;
-    
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.1);
 }
 
-.itemBox{
-    width: 97%;
-    height: 40px;
-    background-color: blue;
-    border: 2px solid black;
-    margin: 10px auto;
-}
 
 .text-line{
     background-color: transparent;
-    width: 15%;
+    width: 50%;
     color: #000000;
     outline: none;
     outline-style: none;
@@ -53,4 +90,124 @@ body {
     display: none;
 }
 
+#loginBox {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    height: 500px;
+    text-align: center;
+}
 
+.loginBtn{
+    background-color: #218838;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 80%;
+
+}
+
+.logininput {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+.center{
+    display:flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.itemBtn{
+    background-color: #AAAAAA;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 92%;
+    margin-bottom: 10px; 
+}
+
+.deleteBtn {
+    background-color: #AA0000;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 65%; 
+    margin-bottom: 10px; 
+}
+
+.logoutBtn {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    background-color: #AA0000;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 10px;
+}
+
+.createBtn{
+    position: absolute;
+    top: 2%;
+    left:5%;
+    background-color: #00AA00;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 10px;
+}
+.saveBtn{
+    position: absolute;
+    bottom: 6%;
+    left:6%;
+    background-color: #00AA00;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 10px;
+}
+
+.cencelBtn{
+    position: absolute;
+    bottom: 6%;
+    right:6%;
+    background-color: #AA0000;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 10px;
+}
+
+.createBtn:hover, .saveBtn:hover{
+    background-color: #1e7e34;
+}
+
+.logoutBtn:hover, .deleteBtn:hover, .cencelBtn:hover {
+    background-color: #c82333; 
+}
+
+.itemBtn:hover{
+    background-color: #888888; 
+}
+
+form{
+  display:inline-block;
+}

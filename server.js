@@ -10,12 +10,12 @@ const session = require('express-session');
 const bcrypt = require('bcrypt');
 
 
-const uri = 'mongodb+srv://brianto:admin@cluster0.o1tli.mongodb.net/grpProject?retryWrites=true&w=majority&appName=Cluster0';
+const uri = 'mongodb+srv://JNYE:jason95291995@cluster0.7ajdc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 const client = new MongoClient(uri);
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-//app.use(express.static('public'));
+app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -42,10 +42,18 @@ connectToDatabase();
 
 function isAuthenticated(req, res, next) {
     if (!req.session.userId) {
-    	res.redirect('/login'); // Redirect if not logged in
+    	return res.redirect('/login'); // Redirect if not logged in
     }
-    return next();
+    next();
 }
+
+app.get('', (req, res) => {
+    res.redirect('/login');
+});
+
+app.post('', (req, res) => {
+    res.redirect('/login');
+});
 
 app.get('/register', (req, res) => {
     res.render('register');
@@ -85,6 +93,15 @@ app.post('/login', async (req, res) => {
 });
 
 app.get('/logout', (req, res) => {
+    req.session.destroy(err => {
+        if (err) {
+            return res.status(500).send('Could not log out');
+        }
+        res.redirect('/login');
+    });
+});
+
+app.post('/logout', (req, res) => {
     req.session.destroy(err => {
         if (err) {
             return res.status(500).send('Could not log out');
