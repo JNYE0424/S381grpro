@@ -131,7 +131,8 @@ The project is organized as follows:
       "cartoonist": "Masashi Kishimoto"
     }
     ```
-
+    curl -X POST -d 'animeName=Naruto&origianlRun=2002&language=Japanese&studio=Studio_Pierrot&director=Hayato_Date&episodes=220&cartoonist=Masashi_Kishimoto' "https://s381-group32.onrender.com/login"
+    
 - **Update Anime by ID**:
   - `PUT /database/anime/id/:id`
     ```json
