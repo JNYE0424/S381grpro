@@ -116,40 +116,74 @@ The project is organized as follows:
   - `GET /database/anime/studio/:studio`
   - `GET /database/anime/genre/:genre`
   - `GET /database/anime/cartoonist/:cartoonist`
-
-- **Add New Anime**:
-  - `POST /database/anime`
+  - eg: `curl GET "https://s381-group32.onrender.com/database/anime/animeName/Naruto"`
     ```json
     {
-      "animeName": "Naruto",
-      "originalRun": "2002-2007",
-      "language": "Japanese",
-      "studio": "Studio Pierrot",
-      "director": "Hayato Date",
-      "episodes": 220,
-      "genre": "Shonen",
-      "cartoonist": "Masashi Kishimoto"
+      "Search Results": [{
+          "_id": "67455ba3a59f68949bf14e82",
+          "animeName": "Naruto",
+          "director": "Hayato_Date",
+          "language": "Japanese",
+          "studio": "Studio_Pierrot",
+          "episodes": 220,
+          "cartoonist": "Masashi_Kishimoto",
+          "__v": 0
+      }
     }
     ```
-    curl -X POST -d 'animeName=Naruto&origianlRun=2002&language=Japanese&studio=Studio_Pierrot&director=Hayato_Date&episodes=220&cartoonist=Masashi_Kishimoto' "https://s381-group32.onrender.com/login"
+  
+- **Add New Anime**:
+  - `POST /database/anime`
+  - eg: `curl -X POST -d 'animeName=Naruto&originalRun=2002-2007&language=Japanese&studio=Studio Pierrot&director=Hayato Date&episodes=220&genre=Shonen&cartoonist=Masashi Kishimoto' "https://s381-group32.onrender.com/database/anime"`
+    ```json
+    {
+    "message": "Successfully added Anime",
+    "data": {
+        "_id": "6746f837fe83d07dffabb45e",
+        "animeName": "Naruto",
+        "originalRun": "2002-2007",
+        "director": "Hayato Date",
+        "language": "Japanese",
+        "studio": "Studio Pierrot",
+        "episodes": 220,
+        "genre": "Shonen",
+        "cartoonist": "Masashi Kishimoto",
+        "__v": 0
+    }
+    ```
     
 - **Update Anime by ID**:
   - `PUT /database/anime/id/:id`
+  - eg: `curl -X PUT -d 'animeName=Boruto&originalRun=2002-2007&language=Japanese&studio=Studio Pierrot&director=Hayato Date&episodes=220&genre=Shonen&cartoonist=Masashi Kishimoto' "https://s381-group32.onrender.com/database/anime/id/6746f837fe83d07dffabb45e"`
     ```json
     {
-      "animeName": "Naruto Shippuden",
-      "originalRun": "2007-2017",
-      "language": "Japanese",
-      "studio": "Studio Pierrot",
-      "director": "Hayato Date",
-      "episodes": 500,
-      "genre": "Shonen",
-      "cartoonist": "Masashi Kishimoto"
+    "message": "Successfully updated",
+    "updatedAnime": {
+        "_id": "6746f837fe83d07dffabb45e",
+        "animeName": "Boruto",
+        "originalRun": "2002-2007",
+        "director": "Hayato Date",
+        "language": "Japanese",
+        "studio": "Studio Pierrot",
+        "episodes": 220,
+        "genre": "Shonen",
+        "cartoonist": "Masashi Kishimoto",
+        "__v": 0
     }
     ```
 
 - **Delete Anime by Name**:
   - `DELETE /database/anime/animeName/:animeName`
+  - eg: `curl -X DELETE "https://s381-group32.onrender.com/database/anime/animeName/Boruto"`
+    ```json
+    {
+        "message": "Successfully deleted",
+        "data": {
+            "acknowledged": true,
+            "deletedCount": 1
+        }
+    }
+    ```
 
 ### Default and Error Routes
 
