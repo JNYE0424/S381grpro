@@ -9,7 +9,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const bcrypt = require('bcrypt');
 
-
+//connect to mongodb
 const uri = 'mongodb+srv://JNYE:jason95291995@cluster0.7ajdc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 const client = new MongoClient(uri);
 
@@ -20,10 +20,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(session({
-    secret: 'your_secret_key', // Change this to a strong secret key
+    secret: 'your_secret_key', 
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false } // Set to true if using HTTPS
+    cookie: { secure: false } 
 }));
 
 
@@ -52,11 +52,11 @@ function isAuthenticated(req, res, next) {
     next();
 }
 
-app.get('', (req, res) => {
+app.get('/', (req, res) => {
     res.redirect('/login');
 });
 
-app.post('', (req, res) => {
+app.post('/', (req, res) => {
     res.redirect('/login');
 });
 
@@ -71,35 +71,23 @@ app.post('/register', async (req, res) => {
     console.log('UserName:', userName);
     console.log('UserPassword:', userPassword);
 
-    // Validate input
     if (!userName || !userPassword) {
         return res.status(400).send('Username and password are required.');
     }
-
-    try {
-        // Check for existing user
-        const existingUser = await User.findOne({ userName }); // Ensure this matches the schema
-        console.log('Existing user:', existingUser);
-        if (existingUser) {
-            return res.status(400).send('Username already exists.');
-        }
-
-        // Hash the password
-        const hashedPassword = await bcrypt.hash(userPassword, 10);
-        const newUser = new User({ userName, userPassword: hashedPassword });
-
-        // Save the new user
-        await newUser.save();
-        console.log('Added user:', newUser);
-        res.redirect('/login');
-    } catch (error) {
-        console.error('Error adding user:', error);
-        if (error.code === 11000) {
-            return res.status(400).send('Username already exists.');
-        }
-        res.status(500).send('Internal Server Error');
+    const existingUser = await User.findOne({ userName }); 
+    console.log('Existing user:', existingUser);
+    if (existingUser) {
+        return res.status(400).send('Username already exists.');
     }
+
+    const hashedPassword = await bcrypt.hash(userPassword, 10);
+    const newUser = new User({ userName, userPassword: hashedPassword });
+
+    await newUser.save();
+    console.log('Added user:', newUser);
+    res.redirect('/login');
 });
+
 app.get('/login', (req, res) => {
     res.render('login');
 });
@@ -232,78 +220,6 @@ app.post('/database/anime', async (req, res) => {
     }
   }
 );
-/* Dynamic RESTful (gave up impmenenting, you can try if you want to)
-app.get('/database/anime', async (req, res) => {
-	try {
-		const { animeName,
-				originalRun,
-				language,
-				studio,
-				director,
-				episodes,
-				genre,
-				cartoonist
-				} = req.query;
-		let query = {};
-		if (animeName)
-			query.animeName = animeName;
-		if (originalRun)
-			query.originalRun = originalRun;
-		if (language)
-			query.language = language;
-		if (studio)
-			query.studio = studio;
-		if (director)
-			query.director = director;
-		if (episodes)
-			query.episodes = episodes;
-		if (genre)
-			query.genre = genre;
-		if (cartoonist)
-			query.cartoonist = cartoonist;
-			
-		const results = await Anime.find(query);
-		const results = await Anime.find();
-		if (results.length != 0) 
-			res.status(200).json({'Search Results:': results});
-		else
-			res.status(404).json({error: 'No result found'});
-	} catch (error) {
-		res.status(500).json({ message: 'Error occured when searching', error: error.message});
-	}
-});
-
-app.get('/database/anime/:keyValuePairs*', async (req, res) => {
-    try {
-        const keyValuePairs = req.params.keyValuePairs;
-
-        let query = {};
-        if (keyValuePairs) {
-            const pairs = keyValuePairs.split('/');
-			console.log(`keyValuePairs: ${keyValuePairs}\npairs: ${pairs}`);
-            if (pairs.length % 2 !== 0) {
-                return res.status(400).json({ error: 'Invalid key-value pair format in the URL' });
-            }
-
-            for (let i = 0; i < pairs.length; i += 2) {
-                const key = pairs[i];
-                const value = pairs[i + 1];
-                query[key] = value;
-            }
-        }
-
-        const results = await Anime.find(query);
-
-        if (results.length > 0) {
-            res.status(200).json({ 'Search Results': results });
-        } else {
-            res.status(404).json({ error: 'No results found' });
-        }
-    } catch (error) {
-        res.status(500).json({ message: 'An error occurred while searching', error: error.message });
-    }
-});
-*/
 
 // retrieve by animeName
 app.get('/database/anime/animeName/:animeName', async (req, res) => {
