@@ -196,17 +196,6 @@ The project is organized as follows:
 - **Password Hashing**: All passwords are hashed using `bcrypt` before storing them in the database.
 - **HTTPS**: When deploying in production, ensure `cookie: { secure: true }` is enabled and HTTPS is used.
 
-## Future Improvements
-
-- Implement a frontend framework like React or Angular for better user experience.
-- Add dynamic query building for more flexible RESTful API searches.
-- Add unit tests and integration tests for API routes and database operations.
-- Secure the app with HTTPS and improve input validation to prevent injection attacks.
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
-
 ---
 
 ## Example Usage
@@ -224,7 +213,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
    - Use the `/database/add` route to add a new anime entry.
 
 5. **Perform API Requests**:
-   - Use tools like Postman or `curl` to interact with the RESTful API endpoints.
+   - Use `curl` to interact with the RESTful API endpoints.
 
 ---
 
