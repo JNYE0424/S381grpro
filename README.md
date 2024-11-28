@@ -64,7 +64,7 @@ Follow the steps below to set up and run the project on your computer.
    Open your browser and navigate to:
 
    ```plaintext
-   http://localhost:3000
+   http://localhost:3000/login
    ```
 
 ## Folder Structure
