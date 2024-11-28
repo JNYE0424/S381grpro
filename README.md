@@ -1,12 +1,13 @@
 # S381grpro
 # S381grpro
+ 13614115 13146954 13703578 12886805 13700797
 
 
 
 ```markdown
 # Anime Database Management System
 
-This project is a website for managing an animation database. It allows users to perform CRUD (Create, Read, Update, Delete) operations on animation data and supports user authentication via registration and login (staff and normal user). The application connects to a MongoDB database to store and retrieve data, for managing the datbase system easily.
+This project is a website for managing an animation database. Users can perform CRUD (Create, Read, Update, Delete) operations on animation data and support user authentication via registration and login in the database (staff and normal users). The database connects to our own MongoDB database to store and retrieve data so that we can easily manage the database system.
 
 ## Features
 
@@ -16,9 +17,9 @@ This project is a website for managing an animation database. It allows users to
   - Session-based authentication for secure access to database features.
 
 - **Anime Database Management**
-  - Add new anime information to the database.
-  - View all anime information in a web interface.
-  - Update or delete existing anime entries.
+  - Create new animation information for the database and the website.
+  - Update or delete existing anime data.
+  - Read all animation information on the main page.
   - RESTful API endpoints to retrieve anime data by various attributes (e.g., name, studio, director, etc.).
 
 - **Error Handling**
@@ -44,9 +45,7 @@ Follow the steps below to set up and run the project on your computer.
 
 ### Steps
 
-1. 
-
-2. **Install dependencies**:
+1. **Install dependencies**:
 
    ```bash
    npm install
@@ -54,13 +53,13 @@ Follow the steps below to set up and run the project on your computer.
 
 
 
-3. **Start the server**:
+2. **Start the server**:
 
    ```bash
    npm start
    ```
 
-4. **Access the application**:
+3. **Access the application**:
 
    Open your browser and navigate to:
 
@@ -94,17 +93,17 @@ The project is organized as follows:
 ### Authentication Routes
 
 - **`GET /register`**: Render the registration page.
-- **`POST /register`**: Register a new user. Expects `userName` and `userPassword` in the request body.
+- **`POST /register`**: Register a new user account, eg. account name and password. Expects `userName` and `userPassword` in the request body.
 - **`GET /login`**: Render the login page.
 - **`POST /login`**: Authenticate the user and establish a session.
 - **`GET /logout`**: Log out the user and destroy their session.
 
-### Anime Management Routes (Web Interface)
+### Animation Management Routes (Web Interface)
 
-- **`GET /database`**: View all anime entries (requires authentication).
-- **`POST /database/add`**: Add a new anime entry (requires authentication).
-- **`POST /database/update`**: Update an existing anime entry (requires authentication).
-- **`POST /database/delete`**: Delete an anime entry (requires authentication).
+- **`GET /database`**: View all animation entries (requires authentication).
+- **`POST /database/add`**: Create a new animation entry (requires authentication).
+- **`POST /database/update`**: Update an existing animation entry (requires authentication).
+- **`POST /database/delete`**: Delete an animation data (requires authentication).
 
 ### RESTful API Routes
 
